@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { createContext } from 'react';
 export const authDataContext = createContext();
 const AuthContext = ({ children }) => {

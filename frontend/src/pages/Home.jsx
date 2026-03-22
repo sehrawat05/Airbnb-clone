@@ -1,8 +1,11 @@
 import React from 'react'
+import Nav from '../component/Nav'
 
 const Home = () => {
     return (
-        <div className='text-[40px]'>Home</div>
+        <div>
+            <Nav />
+        </div>
     )
 }
 
