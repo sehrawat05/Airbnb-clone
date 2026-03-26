@@ -4,11 +4,19 @@ import './index.css'
 import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom'
 import AuthContext from './context/AuthContext'
+import UserContext from './context/UserContext.jsx'
+import ListingContext from './context/ListingContext.jsx'
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <AuthContext>
-        <App />
+        <ListingContext>
+          <UserContext>
+
+            <App />
+
+          </UserContext>
+        </ListingContext>
       </AuthContext>
     </BrowserRouter>
   </StrictMode>,

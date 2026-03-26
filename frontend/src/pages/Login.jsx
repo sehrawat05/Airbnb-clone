@@ -5,13 +5,16 @@ import { useNavigate } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa';
 import { useContext } from 'react';
 import { authDataContext } from '../context/AuthContext';
+import { userDataContext } from '../context/UserContext';
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
     let [email, setEmail] = useState("");
     let [password, setPassword] = useState("");
+    let { userData, setUserData, getCurrentUser } = useContext(userDataContext);
     let { serverUrl } = useContext(authDataContext);
-    const handleLogin = async () => {
+    const handleLogin = async (e) => {
+        e.preventDefault();
         try {
             let result = await fetch(`${serverUrl}/api/auth/login`, {
                 method: "POST",
@@ -25,12 +28,18 @@ const Login = () => {
                 credentials: "include"
             })
             console.log(result);
+            const data = await result.json();
+            console.log(data);
+            if (result.ok) {
+                await getCurrentUser();
+                navigate("/");
+            }
         } catch (error) {
             console.log(error);
         }
     };
     return (
-        <div className='w-[100vh] h-[100vh] flex items-center justify-center relative'>
+        <div className='w-[100vw] h-[100vh] flex items-center justify-center relative'>
             <div className='w-[50px] h-[50px] cursor-pointer absolute top-[10%] left-[5%] ' onClick={() => navigate("/")}>
                 <FaArrowLeft />
             </div>

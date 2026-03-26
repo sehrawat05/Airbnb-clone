@@ -4,6 +4,7 @@ import { FaEyeSlash } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 import { authDataContext } from '../context/AuthContext';
+import { userDataContext } from '../context/UserContext';
 const SignUp = () => {
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
@@ -11,6 +12,7 @@ const SignUp = () => {
     let [name, setName] = useState("");
     let [email, setEmail] = useState("");
     let [password, setPassword] = useState("");
+    let { userData, setUserData, getCurrentUser } = useContext(userDataContext);
     const handleSignUp = async (e) => {
         try {
             e.preventDefault();
@@ -28,12 +30,18 @@ const SignUp = () => {
                 credentials: "include"
             })
             console.log(result);
+            const data = await result.json();
+            console.log(data);
+            if (result.ok) {
+                await getCurrentUser();
+                navigate("/");
+            }
         } catch (error) {
             console.log(error);
         }
     }
     return (
-        <div className='w-[100vh] h-[100vh] flex items-center justify-center relative '>
+        <div className='w-[100vw] h-[100vh] flex items-center justify-center relative '>
             <div className='w-[50px] h-[50px] cursor-pointer absolute top-[10%] left-[5%] ' onClick={() => navigate("/")}>
                 <FaArrowLeft />
             </div>
