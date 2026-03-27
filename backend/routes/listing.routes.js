@@ -1,7 +1,7 @@
 import express from "express";
 
 import { addListing } from "../controllers/listing.controller.js";
-import { isAuth } from "../middlewares/auth.middleware.js";
+import isAuth from "../middleware/isAuth.js";
 import upload from "../middleware/multer.js";
 const listingRouter=express.Router();
 

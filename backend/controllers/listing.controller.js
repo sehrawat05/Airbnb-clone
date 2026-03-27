@@ -1,6 +1,6 @@
 import { uploadOnCloudinary } from "../config/cloudinary.js";
-import User from "../models/user.model.js";
-import Listing from "../models/listing.model.js";   
+import {User} from "../models/user.model.js";
+import {Listing} from "../models/listing.model.js";   
 export const addListing=async(req,res)=>{
     try{
         let host=req.userId;

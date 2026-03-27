@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import User from "./user.model.js";
 const listingSchema= new mongoose.Schema({
     title:{
         type: String,
@@ -48,5 +47,4 @@ const listingSchema= new mongoose.Schema({
     }
 
 },{timestamps:true})
-
-export default mongoose.model("Listing", listingSchema)
+export const Listing = mongoose.model("Listing", listingSchema);

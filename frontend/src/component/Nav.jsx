@@ -60,7 +60,7 @@ const Nav = () => {
 
                 {/* RIGHT SECTION */}
                 <div className='flex items-center justify-end gap-3 w-full md:w-auto relative'>
-                    <span className='hidden sm:block text-sm cursor-pointer rounded-md hover:bg-red-500 hover:text-white text-gray-700 px-3 py-1'>
+                    <span onClick={() => navigate("/listingpage1")} className='hidden sm:block text-sm cursor-pointer rounded-md hover:bg-red-500 hover:text-white text-gray-700 px-3 py-1'>
                         List your home
                     </span>
 
@@ -75,12 +75,28 @@ const Nav = () => {
                     {/* DROPDOWN */}
                     <div className={`w-[200px] absolute top-12 right-0 bg-white border rounded-lg shadow-md ${isMenuOpen ? 'block' : 'hidden'}`}>
                         <ul className='p-2 text-sm'>
-                            <li className='cursor-pointer hover:bg-gray-200 p-2 rounded-md' onClick={() => navigate('/login')}>Login</li>
-                            <li className='cursor-pointer hover:bg-gray-200 p-2 rounded-md' onClick={handleLogout}>Logout</li>
+                            {!userData && <li className='cursor-pointer hover:bg-gray-200 p-2 rounded-md' onClick={() => {
+                                setIsMenuOpen(false)
+                                navigate('/login')
+                            }}>Login</li>
+                            }
+                            {userData && <li className='cursor-pointer hover:bg-gray-200 p-2 rounded-md' onClick={() => {
+                                setIsMenuOpen(false)
+                                handleLogout()
+                            }}>Logout</li>}
                             <div className='w-full h-[1px] bg-gray-200 my-1'></div>
-                            <li className='cursor-pointer hover:bg-gray-200 p-2 rounded-md'>List your Home</li>
-                            <li className='cursor-pointer hover:bg-gray-200 p-2 rounded-md'>My Listing</li>
-                            <li className='cursor-pointer hover:bg-gray-200 p-2 rounded-md'>Check Booking</li>
+                            <li className='cursor-pointer hover:bg-gray-200 p-2 rounded-md' onClick={() => {
+                                setIsMenuOpen(false)
+                                navigate("/listingpage1")
+                            }}>List your Home</li>
+                            <li className='cursor-pointer hover:bg-gray-200 p-2 rounded-md' onClick={() => {
+                                setIsMenuOpen(false)
+                                // navigate("/mylisting")
+                            }}>My Listing</li>
+                            <li className='cursor-pointer hover:bg-gray-200 p-2 rounded-md' onClick={() => {
+                                setIsMenuOpen(false)
+                                // navigate("/checkbooking")
+                            }}>Check Booking</li>
                         </ul>
                     </div>
 
