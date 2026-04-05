@@ -106,7 +106,7 @@ const Nav = () => {
                             }}>List your Home</li>
                             <li className='cursor-pointer hover:bg-gray-200 p-2 rounded-md' onClick={() => {
                                 setIsMenuOpen(false)
-                                // navigate("/mylisting")
+                                navigate("/mylisting")
                             }}>My Listing</li>
                             <li className='cursor-pointer hover:bg-gray-200 p-2 rounded-md' onClick={() => {
                                 setIsMenuOpen(false)

@@ -15,7 +15,7 @@ export const addListing=async(req,res)=>{
 
         
         let user=await User.findByIdAndUpdate(host,{
-            $push:{listings:listing._id}
+            $push:{listing:listing._id}
         },{new:true});
         if(!user){
             return res.status(404).json({
@@ -48,3 +48,4 @@ export const getListing=async(req,res)=>{
         })
     }
 }
+
