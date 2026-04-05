@@ -1,7 +1,9 @@
-import { createContext, useState, useContext } from "react"
+import { createContext, useState, useContext, useEffect } from "react"
 import { authDataContext } from './AuthContext';
+import { useNavigate } from "react-router-dom";
 export const ListingDataContext = createContext();
 const ListingContext = ({ children }) => {
+    let navigate = useNavigate();
     const { serverUrl } = useContext(authDataContext);
     let [title, setTitle] = useState("");
     let [description, setDescription] = useState("");
@@ -15,11 +17,14 @@ const ListingContext = ({ children }) => {
     let [city, setCity] = useState("");
     let [landmark, setLandmark] = useState("");
     let [category, setCategory] = useState("");
-
-
+    let [adding, setAdding] = useState(false);
+    let [listingData, setListingData] = useState([]);
+    let [filteredData, setFilteredData] = useState([]);
 
 
     const handleAddListing = async () => {
+        console.log("clicked")
+        setAdding(true)
         try {
             let formData = new FormData();
             formData.append("title", title);
@@ -31,7 +36,7 @@ const ListingContext = ({ children }) => {
             formData.append("city", city);
             formData.append("landmark", landmark);
             formData.append("category", category);
-            const result = fetch(`${serverUrl}/api/listing/add`, {
+            const result = await fetch(`${serverUrl}/api/listing/add`, {
                 method: "POST",
                 body: formData,
                 headers: {
@@ -39,12 +44,47 @@ const ListingContext = ({ children }) => {
                 },
                 credentials: "include"
             })
+            console.log(result.status);
+            console.log(result.ok);
             const data = await result.json();
             console.log(data);
+            navigate("/");
+            setBackEndImage1(null);
+            setBackEndImage2(null);
+            setBackEndImage3(null);
+            setTitle("");
+            setDescription("");
+            setRent("");
+            setCity("");
+            setLandmark("");
+            setCategory("");
+
+        } catch (error) {
+            console.log(error);
+        }
+        setAdding(false);
+    }
+
+    const getListing = async () => {
+        try {
+            let result = await fetch(`${serverUrl}/api/listing/get`, {
+                method: "GET",
+                headers: {
+                    "Authorization": localStorage.getItem("token")
+                },
+                credentials: "include"
+            })
+            let data = await result.json();
+            console.log(data);
+            setListingData(data.listing);
+            setFilteredData(data.listing);
         } catch (error) {
             console.log(error);
         }
     }
+    useEffect(() => {
+        getListing();
+    }, [adding])
     let value = {
         title,
         setTitle,
@@ -70,7 +110,14 @@ const ListingContext = ({ children }) => {
         setLandmark,
         category,
         setCategory,
-        handleAddListing
+        handleAddListing,
+        adding,
+        setAdding,
+        setListingData,
+        listingData,
+        getListing,
+        filteredData,
+        setFilteredData
 
     }
     return (

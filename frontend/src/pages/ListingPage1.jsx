@@ -64,39 +64,39 @@ const ListingPage1 = () => {
                 <div className='w-[200px] h-[50px] text-[20px] bg-red-400 text-white flex items-center justify-center rounded-full absolute top-[15px] right-[10px] shadow-lg'>SetUp Your Home</div>
                 <div className='w-full flex items-start justify-start flex-col  gap-[10px] '>
                     <label htmlFor="title" className='text-lg font-semibold'>Title</label>
-                    <input type="text" id='title' className='w-[90%] h-[40px] border border-gray-300 rounded-md px-2 required' onChange={(e) => setTitle(e.target.value)} value={title} />
+                    <input type="text" id='title' className='w-[90%] h-[40px] border border-gray-300 rounded-md px-2 required' placeholder='Enter title' onChange={(e) => setTitle(e.target.value)} value={title} />
                 </div>
                 <div className='w-full flex items-start justify-start flex-col  gap-[10px] '>
                     <label htmlFor="des" className='text-lg font-semibold'>Description</label>
-                    <textarea name="des" id="des" className='w-[90%] h-[100px] border border-gray-300 rounded-md px-2 required' onChange={(e) => setDescription(e.target.value)} value={description}></textarea>
+                    <textarea name="des" id="des" className='w-[90%] h-[100px] border border-gray-300 rounded-md px-2 required' placeholder='Enter description' onChange={(e) => setDescription(e.target.value)} value={description}></textarea>
                 </div>
                 <div className='w-full flex items-start justify-start flex-col  gap-[10px] '>
                     <label htmlFor="image1" className='text-lg font-semibold'>Image 1</label>
-                    <input type="file" id='image1' className='w-[90%] border border-gray-300 rounded-md px-2 required text-[15px] px-[10px]' onChange={handleImage1} />
+                    <input type="file" id='image1' className='w-[90%] border border-gray-300 rounded-md px-2 required text-[15px] px-[10px]' placeholder='Upload image 1' onChange={handleImage1} />
                 </div>
 
                 <div className='w-full flex items-start justify-start flex-col  gap-[10px] '>
                     <label htmlFor="image2" className='text-lg font-semibold'>Image 2</label>
-                    <input type="file" id='image2' className='w-[90%] border border-gray-300 rounded-md px-2 required text-[15px] px-[10px]' onChange={handleImage2} />
+                    <input type="file" id='image2' className='w-[90%] border border-gray-300 rounded-md px-2 required text-[15px] px-[10px]' placeholder='Upload image 2' onChange={handleImage2} />
                 </div>
                 <div className='w-full flex items-start justify-start flex-col  gap-[10px] '>
                     <label htmlFor="image3" className='text-lg font-semibold'>Image 3</label>
-                    <input type="file" id='image3' className='w-[90%] border border-gray-300 rounded-md px-2 required text-[15px] px-[10px]' onChange={handleImage3} />
+                    <input type="file" id='image3' className='w-[90%] border border-gray-300 rounded-md px-2 required text-[15px] px-[10px]' placeholder='Upload image 3' onChange={handleImage3} />
                 </div>
 
                 <div className='w-full flex items-start justify-start flex-col  gap-[10px] '>
                     <label htmlFor="rent" className='text-lg font-semibold'>Rent</label>
-                    <input type="number" id='rent' className='w-[90%] h-[40px] border border-gray-300 rounded-md px-2 required' onChange={(e) => setRent(e.target.value)} value={rent} />
+                    <input type="number" id='rent' className='w-[90%] h-[40px] border border-gray-300 rounded-md px-2 required' placeholder='Enter rent' onChange={(e) => setRent(e.target.value)} value={rent} />
                 </div>
 
                 <div className='w-full flex items-start justify-start flex-col  gap-[10px] '>
                     <label htmlFor="city" className='text-lg font-semibold'>City</label>
-                    <input type="text" id='city' className='w-[90%] h-[40px] border border-gray-300 rounded-md px-2 required' onChange={(e) => setCity(e.target.value)} value={city} />
+                    <input type="text" id='city' className='w-[90%] h-[40px] border border-gray-300 rounded-md px-2 required' placeholder='Enter city' onChange={(e) => setCity(e.target.value)} value={city} />
                 </div>
 
                 <div className='w-full flex items-start justify-start flex-col  gap-[10px] '>
                     <label htmlFor="landmark" className='text-lg font-semibold'>Landmark</label>
-                    <input type="text" id='landmark' className='w-[90%] h-[40px] border border-gray-300 rounded-md px-2 required' onChange={(e) => setLandmark(e.target.value)} value={landmark} />
+                    <input type="text" id='landmark' className='w-[90%] h-[40px] border border-gray-300 rounded-md px-2 required' placeholder='Enter landmark' onChange={(e) => setLandmark(e.target.value)} value={landmark} />
                 </div>
 
                 <button className='w-[90%] bg-red-500 text-white py-2 rounded-md mt-4' type='submit' >Next</button>

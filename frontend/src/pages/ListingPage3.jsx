@@ -28,7 +28,9 @@ const ListingPage3 = () => {
         setLandmark,
         category,
         setCategory,
-        handleAddListing
+        handleAddListing,
+        adding,
+        setAdding
 
     } = useContext(ListingDataContext)
     const navigate = useNavigate()
@@ -41,16 +43,24 @@ const ListingPage3 = () => {
                 <h1 className='text-[20px] text-[#272727] md:text-[30px] text-ellipsis text-nowrap overflow-hidden'>{`In ${landmark.toUpperCase()} , ${city.toUpperCase()}`}</h1>
             </div>
             <div className='w-[95%] h-[400px] flex items-center justify-center flex-col md:w-[80%] md:flex-row'>
-                <div className='w-full h-[65%] md:w-[70%] md:h-[100%] overflow-hidden flex items-center justify-center border-[2px] border-white'>
+                <div className='w-[90%] h-[65%] md:w-[70%] md:h-[100%] overflow-hidden flex items-center justify-center border-[2px] border-white'>
                     <img src={frontEndImage1} alt="" className='w-full' />
                 </div>
-                <div className='w-[100%] h-[50%] flex items-center justify-center md:w-[50%] md:h-[100%] md:flex-col bg-black'></div>
-                <div className='w-[100%] h-[100%] overflow-hidden flex items-center justify-center border-[2px]'>
-                    <img src={frontEndImage2} alt="" className='w-[100%]' />
+                <div className='w-[90%] h-[65%] md:w-[70%] md:h-[100%] overflow-hidden flex flex-col items-center justify-center border-[2px] border-white'>
+                    <div className='h-1/2'>
+                        <img src={frontEndImage2} alt="" className='w-[100%]' />
+                    </div>
+                    <div className='h-1/2'>
+                        <img src={frontEndImage3} alt="" className='w-[100%]' />
+                    </div>
                 </div>
-                <div className='w-[100%] h-[100%] overflow-hidden flex items-center justify-center border-[2px]'>
-                    <img src={frontEndImage3} alt="" className='w-[100%]' />
-                </div>
+
+            </div>
+            <div className='w-[95%] flex items-start justify-start text-[18px] md:w-[80%] md:text-[25px]'>{`${title.toUpperCase()} ${category.toUpperCase()} , ${landmark.toUpperCase()}`}</div>
+            <div className='w-[95%] flex items-start justify-start text-[18px] md:w-[80%] md:text-[25px] text-gray-800'>{`${description}`}</div>
+            <div className='w-[95%] flex items-start justify-start text-[18px] md:w-[80%] md:text-[25px]'>Rs.{`${rent}`}/day</div>
+            <div>
+                <button className='w-full p-4 bg-red-500 text-white rounded-md mt-4' disabled={adding} onClick={handleAddListing}>{adding ? "Adding..." : "Add Listing"}</button>
             </div>
         </div>
     )

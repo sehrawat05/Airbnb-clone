@@ -17,11 +17,14 @@ import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { authDataContext } from '../context/AuthContext';
 import { userDataContext } from '../context/UserContext';
+import { ListingDataContext } from '../context/ListingContext';
 const Nav = () => {
     let [isMenuOpen, setIsMenuOpen] = useState(false);
     const navigate = useNavigate();
     let { serverUrl } = useContext(authDataContext);
     let { userData, setUserData } = useContext(userDataContext);
+    let [cate, setCate] = useState();
+    let { listingData, setListingData, filteredData, setFilteredData } = useContext(ListingDataContext);
     const handleLogout = async () => {
         try {
             let result = await fetch(`${serverUrl}/api/auth/logout`, {
@@ -37,8 +40,20 @@ const Nav = () => {
             console.log(error);
         }
     }
+
+    const handleCategory = (category) => {
+        setCate(category);
+        if (category === "Trending") {
+            setFilteredData(listingData);
+        } else {
+            const filtered = listingData.filter((list) =>
+                list.category && list.category.toLowerCase() === category.toLowerCase()
+            );
+            setFilteredData(filtered);
+        }
+    }
     return (
-        <div>
+        <div className=''>
             <div className='w-full min-h-[80px] bg-slate-200 border-b border-slate-400 flex flex-col md:flex-row items-center justify-between px-4 py-2 gap-4'>
 
                 {/* LOGO */}
@@ -121,7 +136,7 @@ const Nav = () => {
                     { icon: <GiWoodCabin />, label: "Cabins" },
                     { icon: <FaShoppingBag />, label: "Shops" }
                 ].map((item, i) => (
-                    <div key={i} className='flex flex-col items-center min-w-[70px] cursor-pointer hover:border-b border-red-500'>
+                    <div key={i} className='flex flex-col items-center min-w-[70px] cursor-pointer hover:border-b border-red-500' onClick={() => handleCategory(item.label)}>
                         <div className='text-xl'>{item.icon}</div>
                         <h3 className='text-xs'>{item.label}</h3>
                     </div>

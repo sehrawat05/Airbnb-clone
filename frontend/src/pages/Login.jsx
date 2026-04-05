@@ -12,7 +12,7 @@ const Login = () => {
     let [email, setEmail] = useState("");
     let [password, setPassword] = useState("");
     let { userData, setUserData, getCurrentUser } = useContext(userDataContext);
-    let { serverUrl } = useContext(authDataContext);
+    let { serverUrl, loading, setLoading } = useContext(authDataContext);
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
@@ -31,7 +31,9 @@ const Login = () => {
             const data = await result.json();
             console.log(data);
             if (result.ok) {
+                setLoading(true);
                 await getCurrentUser();
+                setLoading(false);
                 navigate("/");
             }
         } catch (error) {
@@ -62,7 +64,7 @@ const Login = () => {
 
                     </div>
                 </div>
-                <button className='w-[90%] bg-red-500 text-white py-2 rounded-md mt-4' onClick={handleLogin}>Login</button>
+                <button className='w-[90%] bg-red-500 text-white py-2 rounded-md mt-4' onClick={handleLogin} disabled={loading}>{loading ? "Logging in..." : "Login"}</button>
                 <p>Don't have an account? <a href="/signup" className='text-red-500'>Sign Up</a></p>
             </form>
         </div >

@@ -13,6 +13,7 @@ const SignUp = () => {
     let [email, setEmail] = useState("");
     let [password, setPassword] = useState("");
     let { userData, setUserData, getCurrentUser } = useContext(userDataContext);
+    let { loading, setLoading } = useContext(authDataContext);
     const handleSignUp = async (e) => {
         try {
             e.preventDefault();
@@ -33,7 +34,9 @@ const SignUp = () => {
             const data = await result.json();
             console.log(data);
             if (result.ok) {
+                setLoading(true);
                 await getCurrentUser();
+                setLoading(false);
                 navigate("/");
             }
         } catch (error) {
@@ -67,7 +70,7 @@ const SignUp = () => {
 
                     </div>
                 </div>
-                <button className='w-[90%] bg-red-500 text-white py-2 rounded-md mt-4' onClick={handleSignUp}>Sign Up</button>
+                <button className='w-[90%] bg-red-500 text-white py-2 rounded-md mt-4' onClick={handleSignUp} disabled={loading}>{loading ? "Signing up..." : "Sign Up"}</button>
                 <p>Already have an account? <a href="/login" className='text-red-500'>Login</a></p>
             </form>
         </div>
