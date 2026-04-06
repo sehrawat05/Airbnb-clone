@@ -11,6 +11,7 @@ import { useContext } from 'react'
 import { userDataContext } from './context/UserContext'
 import MyListing from './pages/MyListing'
 import { Navigate } from 'react-router-dom'
+import ViewCard from './pages/ViewCard'
 const App = () => {
   const { userData } = useContext(userDataContext)
   return (
@@ -19,10 +20,11 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/listingpage1" element={userData ? <ListingPage1 /> : <Navigate to={"/"} />} />
-        <Route path="/listingpage2" element={userData ? <ListingPage2 /> : <Navigate to={"/"} />} />
-        <Route path="/listingpage3" element={userData ? <ListingPage3 /> : <Navigate to={"/"} />} />
-        <Route path="/mylisting" element={userData ? <MyListing /> : <Navigate to={"/"} />} />
+        <Route path="/listingpage1" element={userData ? <ListingPage1 /> : <Navigate to={"/login"} />} />
+        <Route path="/listingpage2" element={userData ? <ListingPage2 /> : <Navigate to={"/login"} />} />
+        <Route path="/listingpage3" element={userData ? <ListingPage3 /> : <Navigate to={"/login"} />} />
+        <Route path="/mylisting" element={userData ? <MyListing /> : <Navigate to={"/login"} />} />
+        <Route path="/viewcard" element={userData ? <ViewCard /> : <Navigate to={"/login"} />} />
       </Routes>
     </>
   )

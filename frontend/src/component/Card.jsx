@@ -1,8 +1,19 @@
 import React from 'react'
-
+import { useContext } from 'react'
+import { userDataContext } from '../context/UserContext'
+import { ListingDataContext } from '../context/ListingContext'
+import { useNavigate } from 'react-router-dom'
 const Card = (props) => {
+    let { userData } = useContext(userDataContext);
+    let { handleViewCard } = useContext(ListingDataContext);
+    let navigate = useNavigate();
+    const handleClick = () => {
+        if (userData)
+            handleViewCard(props.id);
+        else navigate("/login");
+    }
     return (
-        <div className='w-[330px] max-w-[85%] h-[460px] bg-slate-100 flex items-start justify-start flex-col rounded-lg cursor-pointer'>
+        <div className='w-[330px] max-w-[85%] h-[460px] bg-slate-100 flex items-start justify-start flex-col rounded-lg cursor-pointer' onClick={handleClick}>
             <div className='w-[100%] h-[67%] bg-[#2e2d2d] rounded-lg overflow-auto flex'>
                 <img src={props.image1} alt="" className='w-[100%] flex-shrink-0' />
                 <img src={props.image2} alt="" className='w-[100%] flex-shrink-0' />

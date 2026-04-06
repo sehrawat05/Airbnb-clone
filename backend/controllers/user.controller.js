@@ -1,7 +1,7 @@
 import {User} from "../models/user.model.js";
 export const getUser=async(req,res)=>{
     try{
-        let user=await User.findById(req.userId).select("-password");
+        let user=await User.findById(req.userId).select("-password").populate("listing", "title image1 image2 image3 description rent category city landmark");
         if(!user) return res.status(404).json({message:"User not found"});
         res.status(200).json(user);
     }catch(error){
