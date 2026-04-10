@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser"
 import cors from "cors"
 import userRouter from "./routes/user.route.js"
 import listingRouter from "./routes/listing.routes.js"
+import bookingRouter from "./routes/booking.routes.js"
 
 dotenv.config()
 let port=process.env.PORT
@@ -21,6 +22,7 @@ app.use(cors({
 app.use("/api/auth", authRouter)
 app.use("/api/users", userRouter);
 app.use("/api/listing", listingRouter);
+app.use("/api/booking", bookingRouter);
 
 app.listen(port,()=>{
     connectDB()

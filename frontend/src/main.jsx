@@ -6,15 +6,16 @@ import { BrowserRouter } from 'react-router-dom'
 import AuthContext from './context/AuthContext'
 import UserContext from './context/UserContext.jsx'
 import ListingContext from './context/ListingContext.jsx'
+import BookingContext from './context/BookingContext.jsx'
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <AuthContext>
         <ListingContext>
           <UserContext>
-
-            <App />
-
+            <BookingContext>
+              <App />
+            </BookingContext>
           </UserContext>
         </ListingContext>
       </AuthContext>

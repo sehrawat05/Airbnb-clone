@@ -3,6 +3,7 @@ import { useContext } from 'react'
 import { userDataContext } from '../context/UserContext'
 import { ListingDataContext } from '../context/ListingContext'
 import { useNavigate } from 'react-router-dom'
+import { CiStar } from "react-icons/ci";
 const Card = (props) => {
     let { userData } = useContext(userDataContext);
     let { handleViewCard } = useContext(ListingDataContext);
@@ -20,9 +21,13 @@ const Card = (props) => {
                 <img src={props.image3} alt="" className='w-[100%] flex-shrink-0' />
             </div>
             <div className='w-[100%] h-[33%] flex flex-col gap-[2px] py-[20px]'>
-                <span className='w-[80%] text-ellipsis overflow-hidden font-semibold text-nowrap text-[#4a3434]'>{`In ${props.landmark.toUpperCase()}, ${props.city.toUpperCase()}`} </span>
+                <div>
+                    <span className='w-[80%] text-ellipsis overflow-hidden font-semibold text-nowrap text-[#4a3434]'>{`In ${props.landmark.toUpperCase()}, ${props.city.toUpperCase()}`} </span>
+
+                    <span className='flex items-center justify-end pr-[20px] gap-[5px]'><CiStar size={30} />{props.ratings}</span> </div>
                 <span className='text-[15px] w-[80%] text-ellipsis overflow-hidden text-nowrap'>{props.title} </span>
                 <span className='text-[18px] w-[80%] text-ellipsis overflow-hidden text-nowrap'>₹{props.rent}</span>
+
             </div>
         </div>
     )

@@ -22,7 +22,7 @@ const Home = () => {
 
                 {listingData.map((list) => (
 
-                    <Card key={list._id} id={list._id} title={list.title} landmark={list.landmark} city={list.city} image1={list.image1} image2={list.image2} image3={list.image3} rent={list.rent} />
+                    <Card key={list._id} id={list._id} title={list.title} landmark={list.landmark} city={list.city} image1={list.image1} image2={list.image2} image3={list.image3} rent={list.rent} rating={list.ratings} />
 
                 ))}
 
