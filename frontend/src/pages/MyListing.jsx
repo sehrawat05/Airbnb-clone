@@ -24,19 +24,23 @@ const MyListing = () => {
             <div className="w-[50%] h-[10%] border-[2px] border-[#908c8c] p-[15px] flex items-center justify-center text-[30px] rounded-md text-[#613b3b] font-semibold mt-[20px] md:w-[600px]">MY LISTING</div>
 
             <div className="w-[100%] h-[90%] flex items-center justify-center gap-[25px] flex-wrap mt-[30px]">
-                <div className='w-[100vw] h-[77vh] flex items-center justify-center gap-[15px] flex-wrap mt-[25px] md:mt-[18px]'>                    {userData.listing.map((listing) => (
-                    <Card
-                        key={listing._id}
-                        id={listing._id}
-                        title={listing.title}
-                        landmark={listing.landmark}
-                        city={listing.city}
-                        image1={listing.image1}
-                        image2={listing.image2}
-                        image3={listing.image3}
-                        rent={listing.rent}
-                    />
-                ))}
+                <div className='w-[100vw] h-[77vh] flex items-center justify-center gap-[15px] flex-wrap mt-[25px] md:mt-[18px]'>
+                    {userData.listing.map((listing) => (
+                        <Card
+                            key={listing._id}
+                            id={listing._id}
+                            title={listing.title}
+                            landmark={listing.landmark}
+                            city={listing.city}
+                            image1={listing.image1}
+                            image2={listing.image2}
+                            image3={listing.image3}
+                            rent={listing.rent}
+                            isBooked={listing.isBooked}
+                            host={listing.host}
+                            ratings={listing.ratings}
+                        />
+                    ))}
 
                 </div>
 

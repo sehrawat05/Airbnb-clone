@@ -3,21 +3,24 @@ import { useContext } from 'react'
 import { authDataContext } from './AuthContext'
 import { userDataContext } from './UserContext';
 import { ListingDataContext } from './ListingContext';
-
+import { useNavigate } from 'react-router-dom';
 
 export const BookingDataContext = createContext()
 function BookingContext({ children }) {
     let { serverUrl } = useContext(authDataContext);
     let { getCurrentUser } = useContext(userDataContext);
-    let { getListing } = useContext(ListingDataContext)
+    let { getListing, cardDetails } = useContext(ListingDataContext)
     let [checkIn, setCheckIn] = useState("")
     let [checkOut, setCheckOut] = useState("")
     let [total, setTotal] = useState(0)
     let [night, setNight] = useState(0)
     let [bookingData, setBookingData] = useState([])
+    let [booking, setBooking] = useState(false)
+    let navigate = useNavigate()
     const handleBooking = async () => {
+        setBooking(true)
         try {
-            let result = await fetch(`${serverUrl}/api/booking/create`, {
+            let result = await fetch(`${serverUrl}/api/booking/create/${cardDetails._id}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -31,13 +34,31 @@ function BookingContext({ children }) {
                 credentials: "include"
             })
             await getCurrentUser()
-
-            let data = await result.json()
             await getListing()
+            let data = await result.json()
+
             setBookingData(data)
             console.log(data)
+            navigate("/")
         } catch (error) {
             console.log(error)
+            setBookingData(null);
+        }
+        setBooking(false)
+    }
+    const cancelBooking = async (id) => {
+        try {
+            let result = await fetch(`${serverUrl}/api/booking/cancel/${id}`, {
+                method: "DELETE",
+                credentials: "include"
+            })
+            let data = await result.json()
+            console.log(data)
+            await getCurrentUser()
+            await getListing()
+        } catch (error) {
+            console.log(error);
+
         }
     }
     let value = {
@@ -49,6 +70,12 @@ function BookingContext({ children }) {
         setTotal,
         night,
         setNight,
+        handleBooking,
+        bookingData,
+        setBookingData,
+        cancelBooking,
+        booking,
+        setBooking,
     }
     return (
         <BookingDataContext.Provider value={value}>

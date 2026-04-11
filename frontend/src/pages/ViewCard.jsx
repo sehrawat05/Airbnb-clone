@@ -26,7 +26,7 @@ const ViewCard = () => {
         total,
         setTotal,
         night,
-        setNight } = useContext(BookingDataContext)
+        setNight, handleBooking, booking, setBooking } = useContext(BookingDataContext)
 
     useEffect(() => {
         if (checkIn && checkOut) {
@@ -73,9 +73,9 @@ const ViewCard = () => {
             <div className='w-[95%] flex items-start justify-start text-[18px] md:w-[80%] md:text-[25px] text-gray-800'>{`${cardDetails.description}`}</div>
             <div className='w-[95%] flex items-start justify-start text-[18px] md:w-[80%] md:text-[25px]'>Rs.{`${cardDetails.rent}`}/day</div>
             <div>
-                {userData._id != cardDetails.host && <button className='w-full p-4 bg-red-500 text-white rounded-md mt-4'>Reserve</button>}
+                {userData._id != cardDetails.host && <button className='w-full p-4 bg-red-500 text-white rounded-md mt-4' onClick={() => setBookingPopUp(true)}>Reserve</button>}
                 {userData._id === cardDetails.host && <button className='w-full p-4 bg-red-500 text-white rounded-md mt-4' onClick={() => setUpdatePopUp(true)}>Edit</button>}
-                {userData._id === cardDetails.host && <button className='w-full p-4 bg-red-500 text-white rounded-md mt-4' onClick={() => setBookingPopUp(true)}>Reserve</button>}
+
             </div >
 
             {/* Update Listing page */}
@@ -148,7 +148,10 @@ const ViewCard = () => {
                     <div className='w-full max-w-[950px] flex flex-col md:flex-row gap-6 items-center justify-center'>
 
                         {/* Form */}
-                        <form className='max-w-[450px] w-full bg-white p-6 rounded-2xl shadow-xl flex flex-col gap-5 border border-gray-200'>
+                        <form className='max-w-[450px] w-full bg-white p-6 rounded-2xl shadow-xl flex flex-col gap-5 border border-gray-200'
+                            onSubmit={(e) => {
+                                e.preventDefault()
+                            }}>
 
                             <h1 className='text-2xl font-bold text-center border-b pb-2'>
                                 Confirm & Book
@@ -195,8 +198,10 @@ const ViewCard = () => {
                             <button
                                 type="submit"
                                 className='w-full bg-black text-white py-3 rounded-xl font-semibold hover:bg-gray-900 active:scale-[0.98] transition'
+                                onClick={() => { handleBooking(cardDetails._id) }}
+                                disabled={booking}
                             >
-                                Reserve Now
+                                {booking ? "Booking..." : "Reserve Now"}
                             </button>
 
                         </form>
@@ -265,8 +270,9 @@ const ViewCard = () => {
                         </div>
 
                     </div>
-                </div>
-            )}
+                </div >
+            )
+            }
         </div >
     )
 }

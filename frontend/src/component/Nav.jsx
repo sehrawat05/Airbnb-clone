@@ -53,7 +53,7 @@ const Nav = () => {
         }
     }
     return (
-        <div className=''>
+        <div className='z-10'>
             <div className='w-full min-h-[80px] bg-slate-200 border-b border-slate-400 flex flex-col md:flex-row items-center justify-between px-4 py-2 gap-4'>
 
                 {/* LOGO */}
@@ -88,7 +88,7 @@ const Nav = () => {
                     </button>
 
                     {/* DROPDOWN */}
-                    <div className={`w-[200px] absolute top-12 right-0 bg-white border rounded-lg shadow-md ${isMenuOpen ? 'block' : 'hidden'}`}>
+                    <div className={`z-10 w-[200px] absolute top-12 right-0 bg-white border rounded-lg shadow-md ${isMenuOpen ? 'block' : 'hidden'}`}>
                         <ul className='p-2 text-sm'>
                             {!userData && <li className='cursor-pointer hover:bg-gray-200 p-2 rounded-md' onClick={() => {
                                 setIsMenuOpen(false)
@@ -111,7 +111,8 @@ const Nav = () => {
                             <li className='cursor-pointer hover:bg-gray-200 p-2 rounded-md' onClick={() => {
                                 setIsMenuOpen(false)
                                 // navigate("/checkbooking")
-                            }}>Check Booking</li>
+                                navigate("/mybooking")
+                            }}>My Booking</li>
                         </ul>
                     </div>
 

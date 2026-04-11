@@ -12,6 +12,7 @@ import { userDataContext } from './context/UserContext'
 import MyListing from './pages/MyListing'
 import { Navigate } from 'react-router-dom'
 import ViewCard from './pages/ViewCard'
+import MyBooking from './pages/MyBooking'
 const App = () => {
   const { userData } = useContext(userDataContext)
   return (
@@ -25,6 +26,7 @@ const App = () => {
         <Route path="/listingpage3" element={userData ? <ListingPage3 /> : <Navigate to={"/login"} />} />
         <Route path="/mylisting" element={userData ? <MyListing /> : <Navigate to={"/login"} />} />
         <Route path="/viewcard" element={userData ? <ViewCard /> : <Navigate to={"/login"} />} />
+        <Route path="/mybooking" element={userData ? <MyBooking /> : <Navigate to={"/login"} />} />
       </Routes>
     </>
   )

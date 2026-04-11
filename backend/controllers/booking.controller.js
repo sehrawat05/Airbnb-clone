@@ -24,7 +24,7 @@ export const createBooking=async(req,res)=>{
             listing:listing._id
         })
         let user=await User.findByIdAndUpdate(req.userId,{
-            $push:{bookings:listing}
+            $push:{booking:booking._id}
         },{new:true});
         if(!user){
             return res.status(404).json({message:"User not found"});
@@ -33,6 +33,43 @@ export const createBooking=async(req,res)=>{
         listing.isBooked=true;
         await listing.save();
         return res.status(201).json({message:"Booking created successfully",booking});
+    }catch(error){
+        console.log(error);
+        res.status(500).json({message:"Internal server error"});
+    }
+}
+
+export const cancelBooking=async(req,res)=>{
+    try{
+        const {id}=req.params;
+        
+        // Find the booking for this listing
+        let booking=await Booking.findOne({listing:id});
+        if(!booking){
+            return res.status(404).json({message:"Booking not found"});
+        }
+        
+        // Update listing to remove booking
+        let listing=await Listing.findByIdAndUpdate(id,{
+            isBooked:false,
+            guest: null
+        },{new:true});
+        
+        // Remove booking from user's booking array
+        let user=await User.findByIdAndUpdate(booking.guest,{
+            $pull:{booking:booking._id}
+        },{new:true});
+        
+        // Delete the booking document
+        await Booking.findByIdAndDelete(booking._id);
+        
+        if(!user){
+            return res.status(404).json({message:"User not found"});
+        }
+        if(!listing){
+            return res.status(404).json({message:"Listing not found"});
+        }
+        return res.status(200).json({message:"Booking cancelled successfully",listing});
     }catch(error){
         console.log(error);
         res.status(500).json({message:"Internal server error"});
