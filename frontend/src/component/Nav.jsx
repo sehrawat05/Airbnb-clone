@@ -1,6 +1,6 @@
 import React from 'react'
 import logo from '../assets/logo.png'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FaSearch } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -18,13 +18,15 @@ import { useContext } from 'react';
 import { authDataContext } from '../context/AuthContext';
 import { userDataContext } from '../context/UserContext';
 import { ListingDataContext } from '../context/ListingContext';
+import { toast } from "sonner";
 const Nav = () => {
     let [isMenuOpen, setIsMenuOpen] = useState(false);
     const navigate = useNavigate();
     let { serverUrl } = useContext(authDataContext);
     let { userData, setUserData } = useContext(userDataContext);
     let [cate, setCate] = useState();
-    let { listingData, setListingData, filteredData, setFilteredData } = useContext(ListingDataContext);
+    let [input, setInput] = useState("")
+    let { handleViewCard, listingData, setListingData, filteredData, setFilteredData, searchData, setSearchData, handleSearch } = useContext(ListingDataContext);
     const handleLogout = async () => {
         try {
             let result = await fetch(`${serverUrl}/api/auth/logout`, {
@@ -34,10 +36,12 @@ const Nav = () => {
                 },
                 credentials: 'include',
             });
-            console.log(result);
+
             setUserData(null);
+            toast.success("Logout successful");
         } catch (error) {
-            console.log(error);
+
+            toast.error(error.response.data.message);
         }
     }
 
@@ -51,6 +55,14 @@ const Nav = () => {
             );
             setFilteredData(filtered);
         }
+    }
+    useEffect(() => {
+        handleSearch(input)
+    }, [input])
+    const handleClick = (id) => {
+        if (userData)
+            handleViewCard(id);
+        else navigate("/login");
     }
     return (
         <div className='z-10'>
@@ -66,11 +78,27 @@ const Nav = () => {
                     <input
                         type="text"
                         placeholder='Anywhere | Any Location | Any City'
+                        onChange={(e) => setInput(e.target.value)}
+                        value={input}
                         className='w-full border-2 border-red-400 rounded-full px-4 py-2 pr-12 text-sm'
                     />
+
                     <button className='text-white bg-red-400 rounded-full p-2 absolute right-2 top-1/2 transform -translate-y-1/2'>
                         <FaSearch size={16} />
                     </button>
+                    {searchData && searchData.length > 0 && (
+                        <div className='absolute top-full left-0 w-full mt-2 z-20'>
+                            <div className='max-h-[300px] overflow-auto bg-white p-4 rounded-lg border border-gray-300 shadow-lg'>
+                                {searchData.map((search, index) => (
+                                    <div key={index} className='border-b border-[black] p-[10px] cursor-pointer hover:bg-gray-100' onClick={() => {
+                                        handleClick(search._id)
+                                    }}>
+                                        {search.title} in {search.landmark},{search.city}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
                 </div>
 
                 {/* RIGHT SECTION */}
@@ -114,7 +142,9 @@ const Nav = () => {
                                 navigate("/mybooking")
                             }}>My Booking</li>
                         </ul>
+
                     </div>
+
 
                     {/* PROFILE */}
                     {userData ? (
@@ -122,15 +152,16 @@ const Nav = () => {
                     ) : (
                         <span><CgProfile /></span>
                     )}
-
                 </div>
+
             </div>
+
             <div className='w-full flex overflow-x-auto gap-6 px-4 py-3 scrollbar-hide justify-center'>
                 {[
                     { icon: <MdWhatshot />, label: "Trending" },
                     { icon: <GiVillage />, label: "Villa" },
-                    { icon: <PiFarm />, label: "Farm House" },
-                    { icon: <MdOutlinePool />, label: "Pool House" },
+                    { icon: <PiFarm />, label: "FarmHouse" },
+                    { icon: <MdOutlinePool />, label: "Pool" },
                     { icon: <MdFamilyRestroom />, label: "Rooms" },
                     { icon: <FaBuilding />, label: "Flats" },
                     { icon: <FaBuildingColumns />, label: "PG" },

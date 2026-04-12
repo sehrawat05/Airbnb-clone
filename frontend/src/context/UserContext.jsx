@@ -19,7 +19,6 @@ const UserContext = ({ children }) => {
             setUserData(data)
         } catch (error) {
             setUserData(null);
-            console.log(error)
         }
     }
     useEffect(() => {

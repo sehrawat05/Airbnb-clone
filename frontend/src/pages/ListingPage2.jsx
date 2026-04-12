@@ -28,7 +28,7 @@ const ListingPage2 = () => {
                     </div>
                     <div className={`w-[180px] h-[100px] flex justify-center items-center flex-col cursor-pointer border-[2px] hover:border-gray-300 text-[16px] rounded-lg ${category === "farmHouse" ? "border-gray-300" : ""}`} onClick={() => setCategory("farmHouse")}>
                         <PiFarmFill className='w-[30px] h-[30px] text-black' />
-                        <h3>Farm House</h3>
+                        <h3>FarmHouse</h3>
                     </div>
                     <div className={`w-[180px] h-[100px] flex justify-center items-center flex-col cursor-pointer border-[2px] hover:border-gray-300 text-[16px] rounded-lg ${category === "rooms" ? "border-gray-300" : ""}`} onClick={() => setCategory("rooms")}>
                         <FaWarehouse className='w-[30px] h-[30px] text-black' />

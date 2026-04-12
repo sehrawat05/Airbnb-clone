@@ -126,3 +126,47 @@ export const deleteListing=async(req,res)=>{
         })
     }
 }
+
+export const ratingListing=async(req,res)=>{
+    try{
+        let {id}=req.params;
+        let {ratings}=req.body;
+        let listing=await Listing.findByIdAndUpdate(id)
+        if(!listing){
+            return res.status(404).json({message:"Listing not found"})
+        }
+        listing.ratings=Number(ratings)
+        await listing.save()
+        res.status(200).json({
+            success:true,
+            ratings:listing.ratings
+        })
+    }catch(error){
+        res.status(500).json({
+            success:false,
+            message:error.message
+        })
+    }
+}
+
+export const search=async(req,res)=>{
+    try{
+        const {query} =req.query;
+        if(!query){
+            return res.status(400).json({message:"Search query is required"})
+        }
+        const listing=await Listing.find({
+            $or:[
+                {landmark :{$regex:query , $options:"i"}},
+                {city: {$regex : query , $options:"i"}},
+                {title :{$regex:query , $options:"i"}}
+            ],
+        });
+
+        return res.status(200).json(listing);
+
+    }catch(error){
+        console.log(error);
+        return res.status(500).json({message:"Internal server error"})
+    }
+}

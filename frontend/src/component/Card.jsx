@@ -41,7 +41,7 @@ const Card = (props) => {
                 <div>
                     <span className='w-[80%] text-ellipsis overflow-hidden font-semibold text-nowrap text-[#4a3434]'>{`In ${props.landmark.toUpperCase()}, ${props.city.toUpperCase()}`} </span>
 
-                    <span className='flex items-center justify-end pr-[20px] gap-[5px]'><CiStar size={30} />{props.ratings}</span> </div>
+                    <span className='flex items-center justify-end pr-[20px] gap-[5px]'><CiStar size={30} fill={"gold"}/>{props.rating}</span> </div>
                 <span className='text-[15px] w-[80%] text-ellipsis overflow-hidden text-nowrap'>{props.title} </span>
                 <span className='text-[18px] w-[80%] text-ellipsis overflow-hidden text-nowrap'>₹{props.rent}</span>
 

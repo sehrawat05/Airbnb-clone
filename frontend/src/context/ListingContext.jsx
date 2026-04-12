@@ -1,6 +1,8 @@
 import { createContext, useState, useContext, useEffect } from "react"
 import { authDataContext } from './AuthContext';
 import { useNavigate } from "react-router-dom";
+
+import { toast } from "sonner";
 export const ListingDataContext = createContext();
 const ListingContext = ({ children }) => {
     let navigate = useNavigate();
@@ -23,9 +25,9 @@ const ListingContext = ({ children }) => {
     let [listingData, setListingData] = useState([]);
     let [filteredData, setFilteredData] = useState([]);
     let [cardDetails, setCardDetails] = useState(null);
-
+    let [searchData, setSearchData] = useState([])
     const handleAddListing = async () => {
-        console.log("clicked")
+
         setAdding(true)
         try {
             let formData = new FormData();
@@ -46,10 +48,7 @@ const ListingContext = ({ children }) => {
                 },
                 credentials: "include"
             })
-            console.log(result.status);
-            console.log(result.ok);
             const data = await result.json();
-            console.log(data);
             navigate("/");
             setBackEndImage1(null);
             setBackEndImage2(null);
@@ -60,9 +59,9 @@ const ListingContext = ({ children }) => {
             setCity("");
             setLandmark("");
             setCategory("");
-
+            toast.success("Added Listing Successfully")
         } catch (error) {
-            console.log(error);
+            toast.error(error.response.data.message)
         }
         setAdding(false);
     }
@@ -77,11 +76,9 @@ const ListingContext = ({ children }) => {
                 credentials: "include"
             })
             let data = await result.json();
-            console.log(data);
             setCardDetails(data.listing);
             navigate("/viewcard");
         } catch (error) {
-            console.log(error);
         }
     }
     const getListing = async () => {
@@ -94,15 +91,12 @@ const ListingContext = ({ children }) => {
                 credentials: "include"
             })
             let data = await result.json();
-            console.log(data);
             setListingData(data.listing);
             setFilteredData(data.listing);
         } catch (error) {
-            console.log(error);
         }
     }
     const handleUpdateListing = async () => {
-        console.log("clicked")
         setUpdating(true);
         try {
 
@@ -124,10 +118,7 @@ const ListingContext = ({ children }) => {
                 },
                 credentials: "include"
             })
-            console.log(result.status);
-            console.log(result.ok);
             const data = await result.json();
-            console.log(data);
             navigate("/");
             setBackEndImage1(null);
             setBackEndImage2(null);
@@ -138,14 +129,13 @@ const ListingContext = ({ children }) => {
             setCity("");
             setLandmark("");
             // setCategory("");
-
+            toast.success('Listing updated sucessfully')
         } catch (error) {
-            console.log(error);
+            toast.error(error.response.data.message)
         }
         setUpdating(false);
     }
     const handleDeleteListing = async () => {
-        console.log("clicked")
         setDeleting(true);
         try {
 
@@ -156,10 +146,7 @@ const ListingContext = ({ children }) => {
                 },
                 credentials: "include"
             })
-            console.log(result.status);
-            console.log(result.ok);
             const data = await result.json();
-            console.log(data);
             navigate("/");
             setBackEndImage1(null);
             setBackEndImage2(null);
@@ -170,11 +157,30 @@ const ListingContext = ({ children }) => {
             setCity("");
             setLandmark("");
             setCategory("");
-
+            toast.success("Listing deleted successfully")
         } catch (error) {
-            console.log(error);
+            toast.error(error.response.data.message)
         }
         setDeleting(false);
+    }
+    const handleSearch = async (data) => {
+        try {
+            const result = await fetch(`${serverUrl}/api/listing/search?query=${data}`, {
+
+                method: "GET",
+                headers: {
+                    "Authorization": localStorage.getItem("token")
+                },
+                credentials: "include"
+            })
+            const resdata = await result.json();
+
+            setSearchData(resdata)
+        }
+        catch (error) {
+            setSearchData(null)
+
+        }
     }
     useEffect(() => {
         getListing();
@@ -220,7 +226,10 @@ const ListingContext = ({ children }) => {
         handleUpdateListing,
         deleting,
         setDeleting,
-        handleDeleteListing
+        handleDeleteListing,
+        handleSearch,
+        searchData,
+        setSearchData
 
     }
     return (

@@ -23,6 +23,7 @@ export const createBooking=async(req,res)=>{
             guest:req.userId,
             listing:listing._id
         })
+        await booking.populate("host", "email")
         let user=await User.findByIdAndUpdate(req.userId,{
             $push:{booking:booking._id}
         },{new:true});

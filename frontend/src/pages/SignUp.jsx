@@ -5,6 +5,8 @@ import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 import { authDataContext } from '../context/AuthContext';
 import { userDataContext } from '../context/UserContext';
+
+import { toast } from "sonner";
 const SignUp = () => {
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
@@ -30,9 +32,8 @@ const SignUp = () => {
                 }),
                 credentials: "include"
             })
-            console.log(result);
             const data = await result.json();
-            console.log(data);
+            toast.success("Signup Successfully")
             if (result.ok) {
                 setLoading(true);
                 await getCurrentUser();
@@ -40,7 +41,7 @@ const SignUp = () => {
                 navigate("/");
             }
         } catch (error) {
-            console.log(error);
+            toast.error("Something went wrong")
         }
     }
     return (

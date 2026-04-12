@@ -6,6 +6,8 @@ import { FaArrowLeft } from 'react-icons/fa';
 import { useContext } from 'react';
 import { authDataContext } from '../context/AuthContext';
 import { userDataContext } from '../context/UserContext';
+
+import { toast } from "sonner";
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
@@ -27,9 +29,8 @@ const Login = () => {
                 }),
                 credentials: "include"
             })
-            console.log(result);
             const data = await result.json();
-            console.log(data);
+            toast.success("Login Successfully")
             if (result.ok) {
                 setLoading(true);
                 await getCurrentUser();
@@ -37,7 +38,7 @@ const Login = () => {
                 navigate("/");
             }
         } catch (error) {
-            console.log(error);
+            toast.error(error.response.data.message)
         }
     };
     return (
