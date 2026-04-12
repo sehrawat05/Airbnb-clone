@@ -15,7 +15,7 @@ let app=express()
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
-    origin: "https://airbnb-clone-xi-bice.vercel.app/",
+    origin: "https://airbnb-clone-xi-bice.vercel.app",
     credentials: true,
 }))
 
